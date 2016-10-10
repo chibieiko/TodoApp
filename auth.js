@@ -79,19 +79,17 @@
             // Finds user from database
             User.findOne({username: username}, function (err, user) {
                 if (err) {
-                    console.log(err.message);
+                    callback();
+                } else if (user === null || user === undefined) {
+                    callback();
                 } else {
                     // Compares passwords to each other
-                    bcrypt.compare(password, user.password, function (err, res) {
+                    bcrypt.compare(password, user.password, function (err, result) {
                         var dbUserObj;
                         if (err) {
-                            res.status(401);
-                            res.json({
-                                status: 401,
-                                message: err.message //"Invalid credentials"
-                            });
+                            callback();
                         } else {
-                            if (res) {
+                            if (result) {
                                 dbUserObj = user;
                             } else {
                                 dbUserObj = false;
