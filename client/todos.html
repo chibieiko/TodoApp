@@ -1,1 +1,10 @@
-<h1>{{name}}'s lists</h1>
+<div data-ng-controller="TodoCtrl">
+    <h1>{{name}}'s lists</h1>
+
+    <button type="button" class="btn btn-default">Add list</button>
+    <h2>Here should be your lists</h2>
+    <div>{{lists}}</div>
+    <!--<div data-ng-repeat="list in getLists()">
+        <button type="button" class="btn btn-default">{{list.listname}}</button>
+    </div>-->
+</div>
