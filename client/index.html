@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-ng-app="todoModule">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Todo</title>
@@ -15,6 +15,7 @@
     <script src="js/services/todoService.js"></script>
     <script src="js/authController.js"></script>
     <script src="js/todoController.js"></script>
+    <script src="js/logoutController.js"></script>
 
     <style>
         .navbar {
@@ -23,11 +24,15 @@
             /*Removes rounded borders*/
             border-radius: 0;
         }
+
+        /*Sets each task row's margin bottom to 2px*/
+        .task {
+            margin-bottom: 2px;
+        }
     </style>
 
-
 </head>
-<body>
+<body data-ng-app="todoModule">
 
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -41,10 +46,11 @@
             <a class="navbar-brand" href="#/">Todo App</a>
         </div>
 
-        <div class="collapse navbar-collapse" id="todoNavbar">
+        <div class="collapse navbar-collapse" id="todoNavbar" data-ng-controller="LogoutCtrl">
             <ul class="nav navbar-nav navbar-right">
                 <li data-ng-class="{'active': activeTab === 'login'}"><a href="#/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                 <li data-ng-class="{'active': activeTab === 'register'}"><a href="#/register"><span class="glyphicon glyphicon-user"></span> Register</a></li>
+                <li data-ng-click="logout()"><a href="#/login"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
             </ul>
         </div>
     </div>

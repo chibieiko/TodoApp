@@ -13,9 +13,8 @@
                 login: function (username, password, callback) {
                     var root = result.save({auth: "login"}, "username=" + username + "&password=" + password
                         , function () {
-                            $rootScope.token = root.token;
                             $cookies.put('token', root.token);
-                            $rootScope.name = root.user.username;
+                            $cookies.put('name', root.user.username);
                             callback();
                         }, function (err) {
                             console.log("auth service login: " + err);

@@ -4,7 +4,7 @@
 (function () {
     "use strict";
 
-    angular.module("todoModule").controller('AuthCtrl', function ($scope, $rootScope, $route, AuthService) {
+    angular.module("todoModule").controller('AuthCtrl', function ($scope, $rootScope, $route, $location, AuthService) {
         // Saves the current active tab to $rootScope so that it can be accessed later
         $rootScope.activeTab = $route.current.activetab;
 
@@ -13,7 +13,8 @@
                 if (err) {
                     console.log("Authentication failure");
                 } else {
-                    location.href="#/";
+                    //location.href="#/";
+                    $location.path('#/');
                 }
             });
         };

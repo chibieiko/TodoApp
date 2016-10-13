@@ -6,21 +6,19 @@
 
     angular.module('todoModule').factory('TodoService', ['$resource', '$rootScope'
         , function ($resource, $rootScope) {
-            var searchString = "http://localhost:8080/:todo";
+            // Lists are under api
+            var searchString = "http://localhost:8080/api/:todo";
             var result = $resource(searchString);
 
             var todo = {
                 getLists: function (callback) {
-                    console.log(1);
-                    var root = result.get({todo: "lists"}
+                    // Server returns an array so query is better than object
+                    var root = result.query({todo: "lists"}
                         , function () {
-                            console.log(2);
-                            $rootScope.lists = root;
-                            console.log("root : " + root);
-                            callback();
+                            callback(root, null);
                         }, function (err) {
                             console.log(" " + err);
-                            callback(err);
+                            callback(null, err);
                         });
                 }
             };

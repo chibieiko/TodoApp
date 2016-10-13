@@ -1,10 +1,38 @@
-<div data-ng-controller="TodoCtrl">
-    <h1>{{name}}'s lists</h1>
+<!--div data-ng-controller="TodoCtrl"-->
+    <h1>Add a new list</h1>
 
     <button type="button" class="btn btn-default">Add list</button>
-    <h2>Here should be your lists</h2>
-    <div>{{lists}}</div>
-    <!--<div data-ng-repeat="list in getLists()">
-        <button type="button" class="btn btn-default">{{list.listname}}</button>
-    </div>-->
-</div>
+
+    <h1>{{uName}}'s lists</h1>
+
+    <div class="panel panel-default" data-ng-repeat="list in lists">
+        <div class="panel-heading" data-ng-click="smoothCollapse(list._id)">{{list.listname}}
+            <span class="pull-right">
+                <button type="button" class="btn btn-default btn-xs" data-ng-click="$event.stopPropagation()">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </button>
+                <button type="button" class="btn btn-danger btn-xs" data-ng-click="$event.stopPropagation()">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </button>
+            </span>
+        </div>
+
+        <div class="panel-body collapse" id="{{list._id}}">
+            <div data-ng-repeat="task in list.tasks" class="row task">
+                <div class="col-xs-1">B</div>
+                <div class="col-xs-8">{{task.taskname}}</div>
+                <div class="col-xs-1">P</div>
+                <div class="col-xs-2">
+                     <span class="pull-right">
+                        <button type="button" class="btn btn-default btn-xs">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </button>
+                        <button type="button" class="btn btn-danger btn-xs">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                     </span>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--/div-->
