@@ -9,6 +9,7 @@
             console.log("in logout");
             $cookies.remove('token');
             $cookies.remove('name');
+
             $scope.lists = null;
         };
     });

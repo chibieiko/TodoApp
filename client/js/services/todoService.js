@@ -12,12 +12,23 @@
 
             var todo = {
                 getLists: function (callback) {
+                    var root;
                     // Server returns an array so query is better than object
-                    var root = result.query({todo: "lists"}
+                    root = result.query({todo: "lists"}
                         , function () {
                             callback(root, null);
                         }, function (err) {
-                            console.log(" " + err);
+                            callback(null, err);
+                        });
+                },
+
+                addList: function (listname, callback) {
+                    var root;
+                    console.log("listname is: " + listname);
+                    root = result.save({todo: "lists"}, "listname=" + listname
+                        , function () {
+                            callback(root, null);
+                        }, function (err) {
                             callback(null, err);
                         });
                 }

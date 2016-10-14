@@ -13,7 +13,6 @@
                 if (err) {
                     console.log("Authentication failure");
                 } else {
-                    //location.href="#/";
                     $location.path('#/');
                 }
             });
