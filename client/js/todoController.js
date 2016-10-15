@@ -83,9 +83,21 @@
                 });
             };
             
-            $scope.addTask = function () {
-                
-            }
+            $scope.addTask = function (list, taskname, priority) {
+                if (priority < 1 || priority > 5 || priority === undefined) {
+                    priority = 1;
+                }
+
+                TodoService.addTask(list._id, taskname, priority, function (result, err) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log(result);
+
+                        list.tasks.push(result.task);
+                    }
+                });
+            };
 
             // ------------------------ STYLING FUNCTIONS ---------------------------------
 

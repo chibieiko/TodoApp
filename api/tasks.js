@@ -84,6 +84,7 @@
                                 });
                             } else {
                                 res.json({
+                                    task: taskToSave,
                                     status: 200,
                                     message: name + " successfully added to " + listObj.listname
                                 });

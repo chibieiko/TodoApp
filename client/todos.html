@@ -111,18 +111,63 @@
     </div>
 
     <div class="panel-body collapse" id="{{list._id}}">
-        <button type="button" class="btn btn-success btn-xs taskButton"><span class="glyphicon glyphicon-plus"></span>
-            Add task
+        <button type="button" class="btn btn-success btn-xs taskButton" data-toggle="modal"
+                data-target="#taskModal{{list._id}}">
+            <span class="glyphicon glyphicon-plus"></span> Add task
         </button>
+        <!-- Add task modal -->
+        <div class="modal fade" id="taskModal{{list._id}}" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Add task modal content -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <!-- Dismisses modal when clicking outside it -->
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h2 class="modal-title">Add a new task to {{list.listname}}</h2>
+                    </div>
+
+                    <form data-ng-submit="addTask(list, taskname, priority); toggleModal('#taskModal'+list._id);" role="form">
+                        <div class="modal-body">
+                            <!-- To input new task's name -->
+                            <div class="form-group">
+                                <label for="taskname" class="control-label">Task name</label>
+                                <input data-ng-model="taskname" type="text" class="form-control" id="taskname"
+                                       placeholder="Enter task name" required/>
+                            </div>
+                            <div class="form-group">
+                                <label for="priority">Priority</label>
+                                <select class="form-control" id="priority" data-ng-model="priority" >
+                                    <option value="1" selected="selected">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <div class="row">
+                                <input type="submit" class="btn btn-success col-xs-3 col-xs-offset-3" value="Add task"/>
+                                <input type="button" class="btn btn-default col-xs-3" data-dismiss="modal"
+                                       value="Cancel"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             <h4 class="col-xs-1">Done</h4>
             <h4 class="col-xs-7">Task</h4>
             <h4 class="col-xs-1">Priority</h4>
         </div>
         <div data-ng-repeat="task in list.tasks" class="row task">
-            <div class="col-xs-1">B</div>
+            <div class="col-xs-1">{{task.isDone}}</div>
             <div class="col-xs-7">{{task.taskname}}</div>
-            <div class="col-xs-1">P</div>
+            <div class="col-xs-1">{{task.priority}}</div>
             <div class="col-xs-3">
                      <span class="pull-right">
                         <button type="button" class="btn btn-default btn-xs">
