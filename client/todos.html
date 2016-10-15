@@ -1,14 +1,13 @@
-<!--div data-ng-controller="TodoCtrl"-->
 <h1>Add a new list</h1>
 
 <button type="button" class="btn btn-success" data-ng-click="addList" data-toggle="modal" data-target="#listModal"><span
         class="glyphicon glyphicon-plus"></span> Add list
 </button>
-<!-- Modal -->
+<!-- Add list modal -->
 <div class="modal fade" id="listModal" role="dialog">
     <div class="modal-dialog">
 
-        <!-- Modal content -->
+        <!-- Add list modal content -->
         <div class="modal-content">
             <div class="modal-header">
                 <!-- Dismisses modal when clicking outside it -->
@@ -16,23 +15,23 @@
                 <h2 class="modal-title">Add a new list</h2>
             </div>
 
+            <form data-ng-submit="addList(); toggleModal('#listModal');" role="form">
                 <div class="modal-body">
                     <!-- To input new list's name -->
                     <div class="form-group">
-                        <label for="listname">List name</label>
+                        <label for="listname" class="control-label">List name</label>
                         <input data-ng-model="listname" type="text" class="form-control" id="listname"
-                               placeholder="Enter list name"/>
+                               placeholder="Enter list name" required/>
                     </div>
                 </div>
 
                 <div class="modal-footer">
                     <div class="row">
-                        <button type="button" class="btn btn-default col-xs-3 col-xs-offset-3 " data-dismiss="modal"
-                                data-ng-click="addList()">Add list
-                        </button>
-                        <button type="button" class="btn btn-default col-xs-3" data-dismiss="modal">Cancel</button>
+                        <input type="submit" class="btn btn-success col-xs-3 col-xs-offset-3" value="Add list"/>
+                        <input type="button" class="btn btn-default col-xs-3" data-dismiss="modal" value="Cancel"/>
                     </div>
                 </div>
+            </form>
         </div>
     </div>
 </div>
@@ -43,19 +42,83 @@
     <div class="panel-heading" data-ng-click="smoothCollapse(list._id); turnChevron(list._id);"><span
             id="{{list._id}}chevron" class="glyphicon glyphicon-chevron-down chevron"></span> {{list.listname}}
         <span class="pull-right">
-                <button type="button" class="btn btn-default btn-xs" data-ng-click="$event.stopPropagation()">
-                    <span class="glyphicon glyphicon-pencil"></span>
-                </button>
-                <button type="button" class="btn btn-danger btn-xs" data-ng-click="$event.stopPropagation()">
-                    <span class="glyphicon glyphicon-trash"></span>
-                </button>
-            </span>
+            <button type="button" class="btn btn-default btn-xs"
+                    data-ng-click="toggleModal('#modifyModal'+list._id); $event.stopPropagation();">
+                <span class="glyphicon glyphicon-pencil"></span>
+            </button>
+            <button type="button" class="btn btn-danger btn-xs"
+                    data-ng-click="toggleModal('#deleteModal'+list._id); $event.stopPropagation();">
+                <span class="glyphicon glyphicon-trash"></span>
+            </button>
+        </span>
+    </div>
+
+    <!-- Modify list modal -->
+    <div class="modal fade" id="modifyModal{{list._id}}" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modify modal content -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <!-- Dismisses modal when clicking outside it -->
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h2 class="modal-title">Rename {{list.listname}}</h2>
+                </div>
+
+                <form data-ng-submit="modifyList(list._id, newname); toggleModal('#modifyModal'+list._id);" role="form">
+                    <div class="modal-body">
+                        <!-- To modify list's name -->
+                        <div class="form-group">
+                            <label for="listname" class="control-label">New list name</label>
+                            <input data-ng-model="newname" type="text" class="form-control" id="listname{{list._id}}"
+                                   placeholder="Enter new list name" required/>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <div class="row">
+                            <input type="submit" class="btn btn-success col-xs-3 col-xs-offset-3" value="Modify list"/>
+                            <input type="button" class="btn btn-default col-xs-3" data-dismiss="modal" value="Cancel"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete list modal -->
+    <div class="modal fade" id="deleteModal{{list._id}}" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Delete modal content -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <!-- Dismisses modal when clicking outside it -->
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h2 class="modal-title">Delete {{list.listname}}?</h2>
+                </div>
+
+                <div class="modal-footer">
+                    <div class="row">
+                        <button type="button" class="btn btn-danger col-xs-3 col-xs-offset-3"
+                                data-ng-click="deleteList(list._id)" data-dismiss="modal">Delete list
+                        </button>
+                        <button type="button" class="btn btn-default col-xs-3" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="panel-body collapse" id="{{list._id}}">
         <button type="button" class="btn btn-success btn-xs taskButton"><span class="glyphicon glyphicon-plus"></span>
             Add task
         </button>
+        <div class="row">
+            <h4 class="col-xs-1">Done</h4>
+            <h4 class="col-xs-7">Task</h4>
+            <h4 class="col-xs-1">Priority</h4>
+        </div>
         <div data-ng-repeat="task in list.tasks" class="row task">
             <div class="col-xs-1">B</div>
             <div class="col-xs-7">{{task.taskname}}</div>
@@ -73,4 +136,3 @@
         </div>
     </div>
 </div>
-<!--/div-->

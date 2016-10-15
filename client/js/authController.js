@@ -23,13 +23,7 @@
                 if (err) {
                     console.log("Authentication failure");
                 } else {
-                    AuthService.login($scope.username, $scope.password, function (err) {
-                        if (err) {
-                            console.log("Authentication failure");
-                        } else {
-                            location.href="#/";
-                        }
-                    });
+                    $scope.login();
                 }
             });
         };

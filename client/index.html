@@ -19,11 +19,34 @@
 
     <style>
         .navbar {
+            /*Glyphicons have z-index*/
+            z-index: 11;
             /*Removes navbar's default margin-bottom*/
             margin-bottom: 0;
             /*Removes rounded borders*/
             border-radius: 0;
+
+            /*Sets custom color for navbar*/
+           /* background-color: #A51B62; /* Old browsers */
+        /* background: -moz-linear-gradient(top, rgba(165,27,98,1) 0%, rgba(165,27,98,1) 100%); /* FF3.6-15 */
+          /*  background: -webkit-linear-gradient(top, rgba(165,27,98,1) 0%,rgba(165,27,98,1) 100%); /* Chrome10-25,Safari5.1-6 */
+           /* background: linear-gradient(to bottom, rgba(165,27,98,1) 0%,rgba(165,27,98,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+           /* filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a51b62', endColorstr='#a51b62',GradientType=0 ); /* IE6-9 */
         }
+
+        /*
+        .navbar-brand:link, .navbar-brand:visited {
+            color: white;
+        }
+
+        .navbar .nav > li > a {
+            color: white;
+        }
+
+        .navbar-brand:hover {
+            color: #adadad;
+        }
+        */
 
         /*Sets each task row's margin bottom to 2px*/
         .task {
@@ -43,13 +66,23 @@
         .chevronOpen {
             transform: rotate(-90deg);
         }
+
+        /*Sets navbar width 100% when affixed to top of page*/
+        .affix {
+            top: 0;
+            width: 100%;
+        }
+
+        .container {
+            padding-top: 50px;
+        }
     </style>
 
 </head>
 <body data-ng-app="todoModule">
 
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
+<nav class="navbar navbar-inverse" data-spy="affix">
+
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#todoNavbar">
                 <span class="icon-bar"></span>
@@ -57,17 +90,17 @@
                 <span class="icon-bar"></span>
             </button>
 
-            <a class="navbar-brand" href="#/">Todo App</a>
+            <a class="navbar-brand navLink" href="#/">Todo App</a>
         </div>
 
         <div class="collapse navbar-collapse" id="todoNavbar" data-ng-controller="LogoutCtrl">
             <ul class="nav navbar-nav navbar-right">
-                <li data-ng-class="{'active': activeTab === 'login'}"><a href="#/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-                <li data-ng-class="{'active': activeTab === 'register'}"><a href="#/register"><span class="glyphicon glyphicon-user"></span> Register</a></li>
-                <li data-ng-click="logout()"><a href="#/login"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                <li data-ng-class="{'active': activeTab === 'login'}"><a class="navLink" href="#/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                <li data-ng-class="{'active': activeTab === 'register'}"><a class="navLink" href="#/register"><span class="glyphicon glyphicon-user"></span> Register</a></li>
+                <li data-ng-click="logout()"><a class="navLink" href="#/login"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
             </ul>
         </div>
-    </div>
+
 </nav>
 
 <div class="container" data-ng-view=""></div>

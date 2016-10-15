@@ -41,6 +41,7 @@
                             });
                         } else {
                             res.json({
+                                list: listToSave,
                                 status: 200,
                                 message: name + " successfully created"
                             });
@@ -57,6 +58,7 @@
         },
 
         update: function (req, res) {
+            console.log("in server newName on: " + req.body.listname);
             if (req.body.listname && req.body.listname.match(pattern)) {
                 // escapes name so no scripts or bad intents go into database
                 var newName = escape(req.body.listname);
@@ -80,7 +82,7 @@
                 res.status(401);
                 res.json({
                     status: 401,
-                    message: "Invalid list name"
+                    message: "Invalid list name" + req.body.listname + " mikssiiiii"
                 });
             }
         },
@@ -88,8 +90,7 @@
         remove: function (req, res) {
             List.find({userId: req.userId, _id: req.params.id}).remove(function (err) {
                 if (err) {
-                    res.status(401);
-                    res.json({
+                    res.status(401).send({
                         status: 401,
                         message: "Error deleting list"
                     });
