@@ -10,7 +10,7 @@
             var searchString = "http://localhost:8080/api/:todo/:id";
             var result = $resource(searchString, null, {'update': {method: 'PUT'}});
 
-            var searchStringTask = "http://localhost:8080/api/:todo/:id/tasks";
+            var searchStringTask = "http://localhost:8080/api/:todo/:id/tasks/:taskId";
             var resultTask = $resource(searchStringTask, null, {'update': {method: 'PUT'}});
 
             var todo = {
@@ -37,7 +37,7 @@
 
                 deleteList: function (listId, callback) {
                     var root;
-                    root = result.delete({todo: "lists", id: listId}
+                    root = result.remove({todo: "lists", id: listId}
                         , function () {
                             callback(root, null);
                         }, function (err) {
@@ -61,6 +61,17 @@
                             todo: "lists",
                             id: listId
                         }, "taskname=" + taskname + "&priority=" + priority,
+                        function () {
+                            callback(root, null);
+                        }, function (err) {
+                            callback(null, err);
+                        });
+                },
+
+                deleteTask: function (listId, taskId, callback) {
+                    var root;
+                    console.log("task id: " + taskId);
+                    root = resultTask.remove({todo: "lists", id: listId, taskId: taskId},
                         function () {
                             callback(root, null);
                         }, function (err) {

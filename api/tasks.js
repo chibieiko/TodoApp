@@ -108,7 +108,7 @@
             // GETS LIST AND TASK BY ID AND UPDATES THAT TASK
             getList(req, res, function (listObj) {
                 // Finds the right task to modify with task id
-                var task = listObj.tasks.id(req.body.id);
+                var task = listObj.tasks.id(req.params.taskId);
                 if (task !== null) {
                     // Checks if task name is to be modified, taskname is a valid taskname and different from the one
                     // that already is in the database
@@ -168,7 +168,7 @@
             // FINDS LIST AND THEN TASK BY TASK ID AND REMOVES THAT TASK
             getList(req, res, function (listObj) {
                 // Pulls the task to be deleted out of the tasks array and updates List schema
-                List.update({_id: listObj.id}, {$pull: {tasks: {_id: req.body.id}}}, function (err) {
+                List.update({_id: listObj.id}, {$pull: {tasks: {_id: req.params.taskId}}}, function (err) {
                     if (err) {
                         res.status(401);
                         res.json({

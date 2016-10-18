@@ -99,6 +99,28 @@
                 });
             };
 
+            $scope.deleteTask = function (list, taskId) {
+                TodoService.deleteTask(list._id, taskId, function (result, err) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log(result);
+
+                        // Removes task from frontend
+                        var i;
+                        for (i = list.tasks.length - 1; i >= 0; i -= 1) {
+                            if (list.tasks[i]._id === taskId) {
+                                list.tasks.splice(i, 1);
+                            }
+                        }
+                    }
+                });
+
+                $scope.updateTask = function (list, taskId, newTaskName, newPriority) {
+
+                };
+            };
+
             // ------------------------ STYLING FUNCTIONS ---------------------------------
 
             $scope.toggleModal = function (id) {

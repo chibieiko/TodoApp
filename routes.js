@@ -47,8 +47,8 @@
     // Calls methods from api for tasks when request type and URL match
     router.get("/lists/:id/tasks", tasks.getAll);
     router.post("/lists/:id/tasks", tasks.create);
-    router.put("/lists/:id/tasks", tasks.update);
-    router.delete("/lists/:id/tasks", tasks.remove);
+    router.put("/lists/:id/tasks/:taskId", tasks.update);
+    router.delete("/lists/:id/tasks/:taskId", tasks.remove);
 
     // exports the router to server
     module.exports = router;
