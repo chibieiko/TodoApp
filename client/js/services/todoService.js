@@ -77,6 +77,17 @@
                         }, function (err) {
                             callback(null, err);
                         });
+                },
+
+                modifyTask: function (listId, taskId, newTaskName, newPriority, callback) {
+                    var root;
+                    root = resultTask.update({todo: "lists", id: listId, taskId: taskId}, "taskname=" + newTaskName +
+                        "&priority=" + newPriority,
+                        function () {
+                            callback(root, null);
+                        }, function (err) {
+                            callback(null, err);
+                        });
                 }
             };
 

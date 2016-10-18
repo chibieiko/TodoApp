@@ -65,7 +65,7 @@
                     <h2 class="modal-title">Rename {{list.listname}}</h2>
                 </div>
 
-                <form data-ng-submit="modifyList(list._id, newname); toggleModal('#modifyModal'+list._id);" role="form">
+                <form data-ng-submit="modifyList(list, newname); toggleModal('#modifyModal'+list._id);" role="form">
                     <div class="modal-body">
                         <!-- To modify list's name -->
                         <div class="form-group">
@@ -169,16 +169,16 @@
             <div class="col-xs-7">{{task.taskname}}</div>
             <div class="col-xs-1">{{task.priority}}</div>
             <div class="col-xs-3">
-                     <span class="pull-right">
-                        <button type="button" class="btn btn-default btn-xs"
-                        data-ng-click="toggleModal('#modifyModal' + task._id)">
-                            <span class="glyphicon glyphicon-pencil"></span>
-                        </button>
-                        <button type="button" class="btn btn-danger btn-xs"
-                                data-ng-click="toggleModal('#deleteModal'+task._id)">
-                            <span class="glyphicon glyphicon-trash"></span>
-                        </button>
-                     </span>
+                 <span class="pull-right">
+                    <button type="button" class="btn btn-default btn-xs"
+                    data-ng-click="toggleModal('#modifyModal' + task._id)">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </button>
+                    <button type="button" class="btn btn-danger btn-xs"
+                            data-ng-click="toggleModal('#deleteModal'+task._id)">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                 </span>
             </div>
 
             <!-- Modify task modal -->
@@ -193,19 +193,19 @@
                             <h2 class="modal-title">Modify {{task.taskname}}</h2>
                         </div>
 
-                        <form data-ng-submit="modifyTask(task._id, newTaskName, newPriority);
+                        <form data-ng-submit="modifyTask(list, task, newTaskName, newPriority);
                         toggleModal('#modifyModal'+task._id);" role="form">
                             <div class="modal-body">
                                 <!-- To modify list's name -->
                                 <div class="form-group">
                                     <label for="taskname{{task._id}}" class="control-label">New task name</label>
-                                    <input data-ng-model="task.taskname" type="text" class="form-control"
-                                           id="taskname{{task._id}}" placeholder="Enter new task name" required/>
+                                    <input data-ng-model="newTaskName" type="text" class="form-control"
+                                           id="taskname{{task._id}}" placeholder="Enter new task name"/>
                                 </div>
                                 <div class="form-group">
                                     <label for="priority{{task._id}}">Priority</label>
                                     <select class="form-control" id="priority{{task._id}}"
-                                            data-ng-model="task.priority" >
+                                            data-ng-model="newPriority" >
                                         <option value="1" selected="selected">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>

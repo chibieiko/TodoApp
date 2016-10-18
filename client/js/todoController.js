@@ -70,19 +70,27 @@
             };
 
             // Modifies list's name
-            $scope.modifyList = function (listId, newname) {
-                TodoService.modifyList(listId, newname, function (result, err) {
+            $scope.modifyList = function (list, newname) {
+                TodoService.modifyList(list._id, newname, function (result, err) {
                     if (err) {
                         // todo error message for user!
                         console.log(err);
                     } else {
                         console.log(result);
-                        // Gets all lists from server
-                        $scope.getLists();
+
+                        // Adds new name to list list object
+                        list.listname = newname;
+                        var i;
+                        // Removes list object with old name and adds list object with new name in its place
+                        for (i = $scope.lists.length - 1; i >= 0; i -= 1) {
+                            if ($scope.lists[i]._id === list._id) {
+                                $scope.lists.splice(i, 1, list);
+                            }
+                        }
                     }
                 });
             };
-            
+
             $scope.addTask = function (list, taskname, priority) {
                 if (priority < 1 || priority > 5 || priority === undefined) {
                     priority = 1;
@@ -115,11 +123,44 @@
                         }
                     }
                 });
-
-                $scope.updateTask = function (list, taskId, newTaskName, newPriority) {
-
-                };
             };
+
+            $scope.modifyTask = function (list, task, newTaskName, newPriority) {
+                // Checks if there is any need to proceed with modify request
+                if (newTaskName !== undefined || newPriority !== undefined) {
+                    TodoService.modifyTask(list._id, task._id, newTaskName, newPriority, function (result, err) {
+                        if (err) {
+
+                            console.log(err);
+                        } else {
+
+                            console.log(result);
+                            console.log("newname: " + newTaskName);
+                            console.log("priority: " + newPriority);
+
+                            // Updates task in frontend
+                            var i, updatedTask;
+                            for (i = list.tasks.length - 1; i >= 0; i -= 1) {
+                                if (list.tasks[i]._id === task._id) {
+                                    if (newTaskName !== undefined) {
+                                        list.tasks[i].taskname = newTaskName;
+                                    }
+
+                                    if (newPriority !== undefined) {
+                                        list.tasks[i].priority = newPriority;
+                                    }
+
+                                    updatedTask = list.tasks[i];
+                                    list.tasks.splice(i, 1, updatedTask);
+                                }
+                            }
+                        }
+                    });
+                } else {
+                    console.log("Nothing to modify");
+                }
+            };
+
 
             // ------------------------ STYLING FUNCTIONS ---------------------------------
 
