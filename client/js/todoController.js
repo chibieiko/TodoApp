@@ -4,7 +4,7 @@
 (function () {
     "use strict";
 
-    angular.module("todoModule").controller('TodoCtrl', function ($scope, $rootScope, $route, $http, $cookies
+    angular.module("todoModule").controller('TodoCtrl', function ($filter, $scope, $rootScope, $route, $http, $cookies
         , $location, TodoService) {
 
         if ($cookies.get('token') === undefined) {
@@ -31,7 +31,7 @@
             };
 
             // Call method immediately so lists can be shown immediately after user has logged in.
-            $scope.getLists();
+            ($scope.getLists());
 
             // Adds a list.
             $scope.addList = function () {
@@ -89,6 +89,20 @@
                         }
                     }
                 });
+            };
+
+            // Initially and after every page refresh sorts tasks by listname alphabetically ascending
+            $scope.sortList = 'listname';
+
+            $scope.sortListWith = function(parameter) {
+                if ($scope.sortList === parameter) {
+                    // Checks if same sort parameter is clicked and reverses sort parameter value
+                    console.log("same so turning it to -parameter");
+                    parameter = "-" + parameter;
+                }
+
+                console.log("parameter to sort with: " + parameter);
+                $scope.sortList = parameter;
             };
 
             $scope.addTask = function (list, taskname, priority) {
@@ -156,14 +170,16 @@
                 }
             };
 
-            $scope.toggleTaskDone = function (list, task) {
-                TodoService.toggleTaskDone(list._id, task, function (result, err) {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        console.log(result);
-                    }
-                });
+            // Initially and after every page refresh sorts tasks by priority
+            $scope.sort = 'priority';
+
+            $scope.sortWith = function(parameter) {
+                // Checks if same sort parameter is clicked and reverses sort parameter value
+                if ($scope.sort === parameter) {
+                    parameter = "-" + parameter;
+                }
+
+                $scope.sort = parameter;
             };
 
 

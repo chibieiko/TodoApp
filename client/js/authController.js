@@ -13,6 +13,7 @@
                 if (err) {
                     console.log("Authentication failure");
                 } else {
+                    $rootScope.loggedIn = true;
                     $location.path('#/');
                 }
             });

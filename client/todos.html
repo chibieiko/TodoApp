@@ -36,9 +36,9 @@
     </div>
 </div>
 
-<h1>{{uName}}'s lists</h1>
+<h2 data-ng-click="sortListWith('listname')">{{uName}}'s lists</h2>
 
-<div class="panel panel-default" data-ng-repeat="list in lists">
+<div class="panel panel-default" data-ng-repeat="list in lists | orderBy: sortList">
     <div class="panel-heading" data-ng-click="smoothCollapse(list._id); turnChevron(list._id);"><span
             id="{{list._id}}chevron" class="glyphicon glyphicon-chevron-down chevron"></span> {{list.listname}}
         <span class="pull-right">
@@ -160,11 +160,11 @@
         </div>
 
         <div class="row">
-            <h4 class="col-xs-1">Done</h4>
-            <h4 class="col-xs-7">Task</h4>
-            <h4 class="col-xs-1">Priority</h4>
+            <h4 class="col-xs-1" data-ng-click="sortWith('isDone')">Done</h4>
+            <h4 class="col-xs-7" data-ng-click="sortWith('taskname')">Task</h4>
+            <h4 class="col-xs-1" data-ng-click="sortWith('priority')">Priority</h4>
         </div>
-        <div data-ng-repeat="task in list.tasks" class="row task">
+        <div data-ng-repeat="task in list.tasks | orderBy: sort" class="row task">
             <div class="col-xs-1">
                 <input type="checkbox" data-ng-model="done" data-ng-init="done = task.isDone"
                        data-ng-click="modifyTask(list, task, null, null, done)"/>
