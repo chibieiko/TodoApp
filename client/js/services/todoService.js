@@ -79,10 +79,22 @@
                         });
                 },
 
-                modifyTask: function (listId, taskId, newTaskName, newPriority, callback) {
+                modifyTask: function (listId, task, newTaskName, newPriority, isDone, callback) {
                     var root;
-                    root = resultTask.update({todo: "lists", id: listId, taskId: taskId}, "taskname=" + newTaskName +
-                        "&priority=" + newPriority,
+                    if (newTaskName === undefined || newTaskName === null) {
+                        newTaskName = " ";
+                    }
+
+                    if (newPriority === undefined || newPriority === null) {
+                        newPriority = " ";
+                    }
+
+                    if (isDone === undefined || isDone === null) {
+                        isDone = " ";
+                    }
+
+                    root = resultTask.update({todo: "lists", id: listId, taskId: task._id}, "taskname=" + newTaskName +
+                        "&priority=" + newPriority + "&isDone=" + isDone,
                         function () {
                             callback(root, null);
                         }, function (err) {

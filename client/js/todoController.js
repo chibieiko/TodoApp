@@ -125,28 +125,23 @@
                 });
             };
 
-            $scope.modifyTask = function (list, task, newTaskName, newPriority) {
+            $scope.modifyTask = function (list, task, newTaskName, newPriority, isDone) {
                 // Checks if there is any need to proceed with modify request
                 if (newTaskName !== undefined || newPriority !== undefined) {
-                    TodoService.modifyTask(list._id, task._id, newTaskName, newPriority, function (result, err) {
+                    TodoService.modifyTask(list._id, task, newTaskName, newPriority, isDone, function (result, err) {
                         if (err) {
-
                             console.log(err);
                         } else {
-
                             console.log(result);
-                            console.log("newname: " + newTaskName);
-                            console.log("priority: " + newPriority);
-
                             // Updates task in frontend
                             var i, updatedTask;
                             for (i = list.tasks.length - 1; i >= 0; i -= 1) {
                                 if (list.tasks[i]._id === task._id) {
-                                    if (newTaskName !== undefined) {
+                                    if (newTaskName !== undefined && newTaskName !== null) {
                                         list.tasks[i].taskname = newTaskName;
                                     }
 
-                                    if (newPriority !== undefined) {
+                                    if (newPriority !== undefined && newTaskName !== null) {
                                         list.tasks[i].priority = newPriority;
                                     }
 
@@ -159,6 +154,16 @@
                 } else {
                     console.log("Nothing to modify");
                 }
+            };
+
+            $scope.toggleTaskDone = function (list, task) {
+                TodoService.toggleTaskDone(list._id, task, function (result, err) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log(result);
+                    }
+                });
             };
 
 

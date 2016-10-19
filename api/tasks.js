@@ -112,14 +112,14 @@
                 if (task !== null) {
                     // Checks if task name is to be modified, taskname is a valid taskname and different from the one
                     // that already is in the database
-                    if (req.body.taskname && req.body.taskname !== "undefined" && req.body.taskname.match(pattern)
+                    if (req.body.taskname && req.body.taskname !== undefined && req.body.taskname.match(pattern)
                         && task.taskname !== escape(req.body.taskname)) {
                         task.taskname = escape(req.body.taskname);
                         modificationsMade = true;
                     }
 
                     // Checks if priority is to be modified
-                    if (req.body.priority && req.body.priority !== "undefined" &&
+                    if (req.body.priority && req.body.priority !== undefined &&
                         checkPriority(req.body.priority) && task.priority !== req.body.priority) {
                         task.priority = req.body.priority;
                         modificationsMade = true;
