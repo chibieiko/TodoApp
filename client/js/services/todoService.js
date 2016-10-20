@@ -70,7 +70,6 @@
 
                 deleteTask: function (listId, taskId, callback) {
                     var root;
-                    console.log("task id: " + taskId);
                     root = resultTask.remove({todo: "lists", id: listId, taskId: taskId},
                         function () {
                             callback(root, null);
@@ -100,6 +99,15 @@
                         }, function (err) {
                             callback(null, err);
                         });
+                },
+
+                createAlert: function (containerId, type, header, message) {
+                    $("#" + containerId).append('<div class="alert alert-' + type + '" id="alert' + containerId + '">' +
+                        '<strong>' + header + '</strong>' + message + '</div>');
+                    $("#alert" + containerId).alert();
+                    window.setTimeout(function () {
+                        $("#alert" + containerId).alert('close');
+                    }, 4000);
                 }
             };
 

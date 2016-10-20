@@ -16,6 +16,7 @@
         var token = req.query.token || req.body.token || req.headers["x-access-token"];
         if (token) {
             try {
+                // todo check expiration
                 // Decodes the token with secret that is saved in config file
                 var decoded = jwt.decode(token, config.secret);
                 // Saves token's user id to req so it can be accessed later on

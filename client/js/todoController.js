@@ -4,11 +4,12 @@
 (function () {
     "use strict";
 
-    angular.module("todoModule").controller('TodoCtrl', function ($filter, $scope, $rootScope, $route, $http, $cookies
+    angular.module("todoModule").controller('TodoCtrl', function ($scope, $rootScope, $route, $http, $cookies
         , $location, TodoService) {
 
         if ($cookies.get('token') === undefined) {
             $location.path('login');
+            $rootScope.loggedIn = false;
         } else {
             // Sets token as a header to server. Server always checks the token before allowing any requests.
             $http.defaults.headers.common['x-access-token'] = $cookies.get('token');
@@ -16,13 +17,13 @@
             $scope.uName = $cookies.get('name');
             // Saves the current active tab to $rootScope so that it can be accessed later
             $rootScope.activeTab = $route.current.activetab;
+            $rootScope.loggedIn = true;
 
             // Requests server to send user's lists from the database to frontend. List object contains it's tasks so
             // no need to get tasks separately.
             $scope.getLists = function () {
                 TodoService.getLists(function (result, err) {
                     if (err) {
-                        // todo error message for user!
                         console.log("Error getting list / No lists available");
                     } else {
                         $scope.lists = result;
@@ -37,12 +38,15 @@
             $scope.addList = function () {
                 TodoService.addList($scope.listname, function (result, err) {
                     if (err) {
-                        // todo error message for user!
+                        TodoService.createAlert("listAlert", "danger",
+                            "Error! ", err.message);
                         console.log(err);
                     } else {
                         console.log(result);
                         // Adds the new list to view
                         $scope.lists.push(result.list);
+                        TodoService.createAlert("listAlert", "success",
+                            "Success! ", result.list.listname + " added successfully");
                     }
                 });
             };
@@ -51,11 +55,10 @@
             $scope.deleteList = function (listId) {
                 TodoService.deleteList(listId, function (result, err) {
                     if (err) {
-                        // todo error message for user!
+                        TodoService.createAlert("listAlert", "danger",
+                            "Error! ", err.message);
                         console.log(err);
                     } else {
-                        // todo success message for user!
-
                         // Removes the deleted list from view
                         var i;
                         for (i = $scope.lists.length - 1; i >= 0; i -= 1) {
@@ -73,10 +76,13 @@
             $scope.modifyList = function (list, newname) {
                 TodoService.modifyList(list._id, newname, function (result, err) {
                     if (err) {
-                        // todo error message for user!
+                        TodoService.createAlert("listAlert", "danger",
+                            "Error! ", err.message);
                         console.log(err);
                     } else {
                         console.log(result);
+                        TodoService.createAlert("listAlert", "success",
+                            "Success! ", "List name updated.");
 
                         // Adds new name to list list object
                         list.listname = newname;
@@ -97,7 +103,6 @@
             $scope.sortListWith = function(parameter) {
                 if ($scope.sortList === parameter) {
                     // Checks if same sort parameter is clicked and reverses sort parameter value
-                    console.log("same so turning it to -parameter");
                     parameter = "-" + parameter;
                 }
 
@@ -165,6 +170,7 @@
                             }
                         }
                     });
+
                 } else {
                     console.log("Nothing to modify");
                 }
@@ -185,6 +191,7 @@
 
             // ------------------------ STYLING FUNCTIONS ---------------------------------
 
+            // Opens or closes modal depending
             $scope.toggleModal = function (id) {
                 $(id).modal('toggle');
             };

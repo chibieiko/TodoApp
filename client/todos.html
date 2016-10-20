@@ -1,8 +1,10 @@
 <h1>Add a new list</h1>
 
-<button type="button" class="btn btn-success" data-ng-click="addList" data-toggle="modal" data-target="#listModal"><span
+<button type="button" class="btn btn-success" data-ng-click="addList" data-toggle="modal"
+        data-target="#listModal"><span
         class="glyphicon glyphicon-plus"></span> Add list
 </button>
+
 <!-- Add list modal -->
 <div class="modal fade" id="listModal" role="dialog">
     <div class="modal-dialog">
@@ -35,6 +37,8 @@
         </div>
     </div>
 </div>
+
+<div id="listAlert"></div>
 
 <h2 data-ng-click="sortListWith('listname')">{{uName}}'s lists</h2>
 
@@ -127,7 +131,8 @@
                         <h2 class="modal-title">Add a new task to {{list.listname}}</h2>
                     </div>
 
-                    <form data-ng-submit="addTask(list, taskname, priority); toggleModal('#taskModal'+list._id);" role="form">
+                    <form data-ng-submit="addTask(list, taskname, priority); toggleModal('#taskModal'+list._id);"
+                          role="form">
                         <div class="modal-body">
                             <!-- To input new task's name -->
                             <div class="form-group">
@@ -137,7 +142,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="priority">Priority</label>
-                                <select class="form-control" id="priority" data-ng-model="priority" >
+                                <select class="form-control" id="priority" data-ng-model="priority">
                                     <option value="1" selected="selected">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -170,11 +175,11 @@
                        data-ng-click="modifyTask(list, task, null, null, done)"/>
             </div>
             <div class="col-xs-7">{{task.taskname}}</div>
-            <div class="col-xs-1">{{task.priority}}</div>
+            <div class="col-xs-1"><span class="badge">{{task.priority}}</span></div>
             <div class="col-xs-3">
                  <span class="pull-right">
                     <button type="button" class="btn btn-default btn-xs"
-                    data-ng-click="toggleModal('#modifyModal' + task._id)">
+                            data-ng-click="toggleModal('#modifyModal' + task._id)">
                         <span class="glyphicon glyphicon-pencil"></span>
                     </button>
                     <button type="button" class="btn btn-danger btn-xs"
@@ -208,7 +213,7 @@
                                 <div class="form-group">
                                     <label for="priority{{task._id}}">Priority</label>
                                     <select class="form-control" id="priority{{task._id}}"
-                                            data-ng-model="newPriority" >
+                                            data-ng-model="newPriority">
                                         <option value="1" selected="selected">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
@@ -248,7 +253,8 @@
                                 <button type="button" class="btn btn-danger col-xs-3 col-xs-offset-3"
                                         data-ng-click="deleteTask(list, task._id)" data-dismiss="modal">Delete task
                                 </button>
-                                <button type="button" class="btn btn-default col-xs-3" data-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-default col-xs-3" data-dismiss="modal">Cancel
+                                </button>
                             </div>
                         </div>
                     </div>

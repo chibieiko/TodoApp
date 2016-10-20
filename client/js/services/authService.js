@@ -17,7 +17,6 @@
                             $cookies.put('name', root.user.username);
                             callback();
                         }, function (err) {
-                            console.log("auth service login: " + err);
                             callback(err);
                         });
                 },
@@ -27,9 +26,18 @@
                         , function () {
                             callback();
                         }, function (err) {
-                            console.log("auth service register: " + err);
+                            console.log(err);
                             callback(err);
                         });
+                },
+
+                createAlert: function (containerId, type, header, message) {
+                    $("#" + containerId).append('<div class="alert alert-' + type + '" id="alert' + containerId + '">' +
+                        '<strong>' + header + '</strong>' + message + '</div>');
+                    $("#alert" + containerId).alert();
+                    window.setTimeout(function () {
+                        $("#alert" + containerId).alert('close');
+                    }, 4000);
                 }
             };
 

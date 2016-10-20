@@ -8,6 +8,7 @@
         // Secret word for bcrypt
         secret: 'test_secret',
         // Database url
-        database: 'mongodb://localhost:27017/todo'
+        // Mongo is running in mLab
+        database: 'mongodb://ebi:ebi24@ds061196.mlab.com:61196/todoapp'
     };
 }());

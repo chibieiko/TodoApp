@@ -99,11 +99,11 @@
 
         <div class="collapse navbar-collapse" id="todoNavbar" data-ng-controller="LogoutCtrl">
             <ul class="nav navbar-nav navbar-right">
-                <li data-ng-show="!loggedIn" data-ng-class="{'active': activeTab === 'login'}"><a class="navLink" href="#/login">
+                <li data-ng-if="!loggedIn" data-ng-class="{'active': activeTab === 'login'}"><a class="navLink" href="#/login">
                     <span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-                <li data-ng-show="!loggedIn" data-ng-class="{'active': activeTab === 'register'}"><a class="navLink" href="#/register">
+                <li data-ng-if="!loggedIn" data-ng-class="{'active': activeTab === 'register'}"><a class="navLink" href="#/register">
                     <span class="glyphicon glyphicon-user"></span> Register</a></li>
-                <li data-ng-show="loggedIn" data-ng-click="logout()"><a class="navLink" href="#/login">
+                <li data-ng-if="loggedIn" data-ng-click="logout()"><a class="navLink" href="#/login">
                     <span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
             </ul>
         </div>
