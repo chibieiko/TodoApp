@@ -22,7 +22,7 @@
                 },
 
                 register: function (username, password, callback) {
-                    var root = result.save({auth: "register"}, "username=" + username + "&password=" + password
+                    result.save({auth: "register"}, "username=" + username + "&password=" + password
                         , function () {
                             callback();
                         }, function (err) {
@@ -31,6 +31,8 @@
                         });
                 },
 
+
+                // CREATES AN ALERT BANNER WITH SPECIFIED TYPE, HEADER AND MESSAGE
                 createAlert: function (containerId, type, header, message) {
                     $("#" + containerId).append('<div class="alert alert-' + type + '" id="alert' + containerId + '">' +
                         '<strong>' + header + '</strong>' + message + '</div>');

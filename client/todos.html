@@ -23,7 +23,7 @@
                     <div class="form-group">
                         <label for="listname" class="control-label">List name</label>
                         <input data-ng-model="listname" type="text" class="form-control" id="listname"
-                               placeholder="Enter list name" required/>
+                               placeholder="Enter list name" required autofocus/>
                     </div>
                 </div>
 
@@ -73,9 +73,9 @@
                     <div class="modal-body">
                         <!-- To modify list's name -->
                         <div class="form-group">
-                            <label for="listname" class="control-label">New list name</label>
+                            <label for="listname{{list._id}}" class="control-label">New list name</label>
                             <input data-ng-model="newname" type="text" class="form-control" id="listname{{list._id}}"
-                                   placeholder="Enter new list name" required/>
+                                   placeholder="Enter new list name" required autofocus/>
                         </div>
                     </div>
 
@@ -138,7 +138,7 @@
                             <div class="form-group">
                                 <label for="taskname" class="control-label">Task name</label>
                                 <input data-ng-model="taskname" type="text" class="form-control" id="taskname"
-                                       placeholder="Enter task name" required/>
+                                       placeholder="Enter task name" required autofocus/>
                             </div>
                             <div class="form-group">
                                 <label for="priority">Priority</label>
@@ -204,11 +204,11 @@
                         <form data-ng-submit="modifyTask(list, task, newTaskName, newPriority, null);
                         toggleModal('#modifyModal'+task._id);" role="form">
                             <div class="modal-body">
-                                <!-- To modify list's name -->
+                                <!-- To modify task's name -->
                                 <div class="form-group">
                                     <label for="taskname{{task._id}}" class="control-label">New task name</label>
                                     <input data-ng-model="newTaskName" type="text" class="form-control"
-                                           id="taskname{{task._id}}" placeholder="Enter new task name"/>
+                                           id="taskname{{task._id}}" placeholder="Enter new task name" autofocus/>
                                 </div>
                                 <div class="form-group">
                                     <label for="priority{{task._id}}">Priority</label>

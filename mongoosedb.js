@@ -12,6 +12,6 @@
     // variable containing the connection
     var db = mongoose.connection;
 
-    // Exports db so it can be used elsewhere
+    // Exports db so it can be used in other .js files
     module.exports = db;
 }());

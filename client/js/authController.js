@@ -11,9 +11,8 @@
         $scope.login = function () {
             AuthService.login($scope.username, $scope.password, function (err) {
                 if (err) {
-                    console.log(err);
                     AuthService.createAlert("loginAlert", "danger",
-                        "Error! ", "Invalid credentials");
+                        "Error! ", err.data.message);
                 } else {
                     $rootScope.loggedIn = true;
                     $location.path('#/');
@@ -25,9 +24,7 @@
             AuthService.register($scope.username, $scope.password, function (err) {
                 if (err) {
                     AuthService.createAlert("registerAlert", "danger",
-                        "Error! ", "Password must contain uppercase, lowercase and numbers " +
-                        "and be at least 8 characters long");
-                    console.log(err);
+                        "Error! ", err.data.message);
                 } else {
                     $scope.login();
                 }

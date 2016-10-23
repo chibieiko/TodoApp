@@ -8,11 +8,12 @@
     var mongoose = require('mongoose')
         , Schema = mongoose.Schema
         , TaskSchema = new Schema({
-        taskname: {type: String},
-        priority: {type: Number},
-        isDone: {type: Boolean},
-        list: {type: Schema.ObjectId, ref: 'List'}
-    });
+            taskname: {type: String},
+            priority: {type: Number},
+            isDone: {type: Boolean},
+            // The ref option is what tells Mongoose in which model to look for the id.
+            list: {type: Schema.ObjectId, ref: 'List'}
+        });
 
     // Sets up a mongoose model and exports it using module.exports
     module.exports = mongoose.model('Task', TaskSchema);

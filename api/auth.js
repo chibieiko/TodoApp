@@ -7,11 +7,11 @@
     // GETS ALL THE PACKAGES AND MODULES NEEDED
     // Used to create, sign and verify tokens
     var jwt = require('jwt-simple')
-        , config = require('./config')
+        , config = require('./../config')
         // Crypts passwords
         , bcrypt = require('bcrypt-nodejs')
         // Creates a model of UserSchema
-        , User = require('./api/models/user.js')
+        , User = require('./models/user.js')
         // Requires password to contain one lowercase character, one uppercase character, a number
         // and be at least 8 characters long ('?=' checks if certain characters are a match, returns boolean)
         , patternPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,50}$/
@@ -21,12 +21,13 @@
     // Sets how long until a token expires
     function expiresIn(numDays) {
         var dateObj = new Date();
-        return dateObj.setDate(dateObj.getDate() + numDays);
+        dateObj.setDate(dateObj.getDate() + numDays);
+        return dateObj.getTime();
     }
 
     // Generates a token for a user
     function genToken(user) {
-        var expires = expiresIn(7); // Alive for 7 days
+        var expires = expiresIn(7); // Alive for 7 day
         // Generates the token
         var token = jwt.encode({
             exp: expires,
@@ -51,13 +52,13 @@
                 res.status(401);
                 res.json({
                     status: 401,
-                    message: "Invalid login credentials"
+                    message: "Invalid credentials"
                 });
 
                 return;
             }
 
-            // Fires a query to mongo db if credentials are valid
+            // Generates a token for user if credentials are valid
             auth.validate(username, password, function (userObject) {
                 // Sends a 401 error message if authentication fails
                 if (!userObject) {
@@ -74,7 +75,7 @@
             });
         },
 
-        // Validates user's password
+        // Validates user's username and password
         validate: function (username, password, callback) {
             // Finds user from database
             User.findOne({username: username}, function (err, user) {
@@ -108,32 +109,33 @@
                 // Checks if user already exists
                 User.findOne({username: req.body.username}, function (err, user) {
                     if (err) {
-                        res.status(401);
+                        res.status(400);
                         res.json({
-                            status: 401,
-                            message: err.message //"Error finding username"
+                            status: 400,
+                            message: "Username already in use"
                         });
                     } else if (user === null) {
                         var username = req.body.username;
                         if (req.body.password && req.body.password.match(patternPassword)) {
+                            // brypts the password for secure database storing
                             bcrypt.hash(req.body.password, null, null, function (err, hash) {
                                 if (err) {
-                                    res.status(401);
+                                    res.status(500);
                                     res.json({
-                                        status: 401,
-                                        message: err.message // password encryption failed
+                                        status: 500,
+                                        message: "password encryption failed"
                                     });
                                 } else {
                                     // User is a model of UserSchema
                                     var userToSave = new User({username: username, password: hash});
-                                    // Saves userToSave to collection users
+                                    // Saves userToSave to db collection users
                                     userToSave.save(function (err) {
                                         if (err) {
                                             console.log(err);
-                                            res.status(401);
+                                            res.status(500);
                                             res.json({
-                                                status: 401,
-                                                message: err.message //"Error saving user details"
+                                                status: 500,
+                                                message: "Error saving user details to database"
                                             });
                                         } else {
                                             res.json({
@@ -145,25 +147,26 @@
                                 }
                             });
                         } else {
-                            res.status(401);
+                            res.status(400);
                             res.json({
-                                status: 401,
-                                message: "Invalid password"
+                                status: 400,
+                                message: "Invalid password. Must contain uppercase, lowercase, a number and " +
+                                "be at least 8 characters long"
                             });
                         }
                     } else {
-                        res.status(401);
+                        res.status(400);
                         res.json({
-                            status: 401,
-                            message: "Username already reserved"
+                            status: 400,
+                            message: "Invalid username"
                         });
                     }
                 });
             } else {
-                res.status(401);
+                res.status(400);
                 res.json({
-                    status: 401,
-                    message: "Did not receive username"
+                    status: 400,
+                    message: "Did not receive a username"
                 });
             }
         }

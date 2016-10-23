@@ -11,7 +11,7 @@
         // Requires user module
         , User = require('./api/models/user')
         , userRoutes = require('./routes')
-        , auth = require('./auth');
+        , auth = require('./api/auth');
 
     // CONFIGURATIONS
     var port = 8080; // process.env.PORT
@@ -43,6 +43,9 @@
 
     // Delivers url info to routes.js. Does there things accordingly.
     app.use('/api', userRoutes);
+
+    // Uses index.html
+    //app.use(express.static("client"));
 
     // todo basic route
     app.get('/', function (req, res) {

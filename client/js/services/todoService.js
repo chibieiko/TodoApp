@@ -4,8 +4,8 @@
 (function () {
     "use strict";
 
-    angular.module('todoModule').factory('TodoService', ['$resource', '$rootScope'
-        , function ($resource, $rootScope) {
+    angular.module('todoModule').factory('TodoService', ['$resource'
+        , function ($resource) {
             // Lists are under api
             var searchString = "http://localhost:8080/api/:todo/:id";
             var result = $resource(searchString, null, {'update': {method: 'PUT'}});
@@ -14,6 +14,9 @@
             var resultTask = $resource(searchStringTask, null, {'update': {method: 'PUT'}});
 
             var todo = {
+
+                // ---------------------- LIST FUNCTIONS ---------------------------
+
                 getLists: function (callback) {
                     var root;
                     // Server returns an array so query is better than get
@@ -54,6 +57,8 @@
                             callback(null, err);
                         });
                 },
+
+                // ---------------------- TASK FUNCTIONS ---------------------------
 
                 addTask: function (listId, taskname, priority, callback) {
                     var root;
@@ -101,6 +106,8 @@
                         });
                 },
 
+
+                // CREATES AN ALERT BANNER WITH SPECIFIED TYPE, HEADER AND MESSAGE
                 createAlert: function (containerId, type, header, message) {
                     $("#" + containerId).append('<div class="alert alert-' + type + '" id="alert' + containerId + '">' +
                         '<strong>' + header + '</strong>' + message + '</div>');

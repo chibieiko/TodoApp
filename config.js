@@ -5,7 +5,7 @@
     "use strict";
 
     module.exports = {
-        // Secret word for bcrypt
+        // Secret word for bcrypt. Store in a separate file for a real project.
         secret: 'test_secret',
         // Database url
         // Mongo is running in mLab
