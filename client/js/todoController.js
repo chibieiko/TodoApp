@@ -212,17 +212,16 @@
 
             // Initially and after every page refresh sorts tasks by priority
             $scope.sort = 'priority';
+            $scope.reverse = false;
 
             // Sorts tasks with the given parameter
             $scope.sortWith = function (parameter) {
-                console.log(parameter);
                 // Checks if same sort parameter is clicked and reverses sort parameter value
                 if ($scope.sort === parameter) {
-                    parameter = "-" + parameter;
-                    console.log(parameter);
+                    $scope.reverse = !($scope.reverse);
+                } else {
+                    $scope.sort = parameter;
                 }
-
-                $scope.sort = parameter;
             };
 
 

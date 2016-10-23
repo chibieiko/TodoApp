@@ -169,7 +169,7 @@
             <h4 class="col-xs-7" data-ng-click="sortWith('taskname')">Task</h4>
             <h4 class="col-xs-1" data-ng-click="sortWith('priority')">Priority</h4>
         </div>
-        <div data-ng-repeat="task in list.tasks | orderBy: sort" class="row task">
+        <div data-ng-repeat="task in list.tasks | orderBy: sort : reverse" class="row task">
             <div class="col-xs-1">
                 <input type="checkbox" data-ng-model="done" data-ng-init="done = task.isDone"
                        data-ng-click="modifyTask(list, task, null, null, done)"/>
