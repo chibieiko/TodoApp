@@ -8,7 +8,7 @@
         , List = require('./models/list.js')
         , tasks
         // Task names must be between 1 to 100 characters and cannot begin with a white space
-        , pattern = /^\S.{1,100}$/
+        , pattern = /^\S.{0,100}$/
         , priorityValue = 1;
 
     // Checks whether priority is a number, returns a boolean accordingly

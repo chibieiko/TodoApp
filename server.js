@@ -47,7 +47,6 @@
     // Uses index.html
     //app.use(express.static("client"));
 
-    // todo basic route
     app.get('/', function (req, res) {
         res.send('Hello! The API is at http://localhost' + port + '/api');
     });
